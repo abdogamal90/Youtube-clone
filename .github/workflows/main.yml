@@ -21,9 +21,12 @@ jobs:
       - name: Get commit SHA
         id: commit_sha
         run: echo "::set-output name=sha::$(git rev-parse HEAD)"
+      - name: Declare some variables
+        shell: bash
+        run: |
+          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+          echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
         
       - name: Send Slack notification
         run: |
-          COMMIT_SHA=${{ steps.commit_sha.outputs.sha }}
-          COMMIT_NUMBER=${COMMIT_SHA:0:7}
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ github.actor }} has pushed commit number ${COMMIT_NUMBER} which has commit message ${{ github.event.head_commit.message }} on QA branch for ${{ github.event.repository.name }} on ${{ github.event.repository.updated_at}}"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ github.actor }} has pushed commit number ${{ env.sha_short }} which has commit message ${{ github.event.head_commit.message }} on QA branch for ${{ github.event.repository.name }} on ${{ github.event.repository.updated_at}}"}' https://hooks.slack.com/services/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
