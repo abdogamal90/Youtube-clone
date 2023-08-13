@@ -3,7 +3,7 @@ name: Slack Notification
 on:
   push:
     branches:
-      - your-target-branch
+      - master
 
 jobs:
   send-notification:
