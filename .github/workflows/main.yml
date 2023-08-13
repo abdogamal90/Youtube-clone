@@ -23,5 +23,4 @@ jobs:
 
       - name: Send Slack notification
         run: |
-          curl -X POST -H 'Content-type: application/json' --data 
-          '{"text":"${{ github.actor }} has pushed commit "}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"${{ github.actor }} has pushed commit "}' https://hooks.slack.com/services/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
