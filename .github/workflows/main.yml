@@ -20,7 +20,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')"
+        
       - name: Send Slack notification
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ github.actor }} has pushed commit number ${{ steps.commit_info.outputs.commit }} which has commit message ${{ steps.commit_message.outputs.message }} on QA branch for ${{ github.event.repository.name }}"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ github.actor }} has pushed commit number ${{ steps.commit_info.outputs.commit }} which has commit message ${{ steps.commit_message.outputs.message }} on QA branch for ${{ github.event.repository.name }} on $NOW"}' https://hooks.slack.com/services/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
