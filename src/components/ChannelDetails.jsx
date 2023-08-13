@@ -41,7 +41,6 @@ const ChannelDetails = () => {
       <Box sx={{ ml: "60px" }}>
         <Videos videos={videos} />
       </Box>
-      <div>sdkidasij</div>
     </div>
   );
 };
