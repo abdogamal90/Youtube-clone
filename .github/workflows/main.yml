@@ -18,9 +18,10 @@ jobs:
         with:
           node-version: '14'
           
-      - name: Set current date as env variable
-        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')"
+      - name: Get commit SHA
+        id: commit_sha
+        run: echo "::set-output name=sha::$(git rev-parse HEAD)"
         
       - name: Send Slack notification
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ github.actor }} has pushed commit number $(git rev-parse HEAD) which has commit message ${{ github.event.head_commit.message }} on QA branch for ${{ github.event.repository.name }} on ${{ github.event.repository.updated_at}}"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ github.actor }} has pushed commit number ${{ steps.commit_sha.outputs.sha }} which has commit message ${{ github.event.head_commit.message }} on QA branch for ${{ github.event.repository.name }} on ${{ github.event.repository.updated_at}}"}' https://hooks.slack.com/services/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
