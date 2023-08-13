@@ -1,0 +1,29 @@
+name: Slack Notification
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  send-notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send Slack notification
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{
+            "text": "${{ github.actor }} has pushed commit number ${{ steps.commit_info.outputs.commit }} which has commit message ${{ steps.commit_message.outputs.message }} on QA branch for your-repo-name on $(date)"
+          }' `https://hooks.slack.com/services/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`
