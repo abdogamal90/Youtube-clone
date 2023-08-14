@@ -29,4 +29,4 @@ jobs:
         
       - name: Send Slack notification
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ github.actor }} has pushed commit number ${{ env.sha_short }} which has commit message ${{ github.event.head_commit.message }} on QA branch for ${{ github.event.repository.name }} on ${{ github.event.repository.updated_at}}"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text": "Deployed on QA\\n\\nDeployed by : ${{github.actor}}\\n\\nFeature : ${{env.sha_short}} - ${{Commit_message}}\\n\\nApps Deployed : ${{ github.event.repository.name }} changed"}' https://hooks.slack.com/services/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
